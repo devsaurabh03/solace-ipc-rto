@@ -13,15 +13,17 @@ java {
 }
 
 repositories {
-    flatDir(dir: "/libs/solclientj/lib", name: "Java RTO API lib directory")
+    mavenCentral()
 }
 
 
 dependencies {
-    implementation name: 'solclientj'
-    implementation name: 'native-lib-loader'
-}
+    // SciJava native loader (required by Solace RTO)
+    implementation 'org.scijava:native-lib-loader:2.4.0'
 
+    // Solace Java RTO JAR (local or internal repo)
+    implementation("com.solacesystems:solclientj:10.9.0")
+}
 application {
     // Default main - you can change/run other classes from IDE
     mainClass = 'com.ipc.IPCServer'
