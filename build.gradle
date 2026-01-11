@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    flatDir(dir: "/libs/solclientj/lib", name: "Java RTO API lib directory")
+}
+
+
+dependencies {
+    implementation name: 'solclientj'
+    implementation name: 'native-lib-loader'
+}
+
+application {
+    // Default main - you can change/run other classes from IDE
+    mainClass = 'com.ipc.IPCServer'
+}
+
+// Ensure native libs directory is added to java.library.path for run tasks
+tasks.withType(JavaExec).configureEach {
+    systemProperty "java.library.path", file("native").absolutePath
+}
